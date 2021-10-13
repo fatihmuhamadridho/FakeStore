@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   ADD_PRODUCTS,
   EDIT_PRODUCTS,
@@ -5,6 +6,9 @@ import {
   GET_PRODUCTS,
   PRODUCTS_ERROR,
 } from "./types";
+=======
+import { GET_PRODUCTS, PRODUCTS_ERROR } from "./types";
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
 
 const initialState = {
   products: [],
@@ -21,6 +25,7 @@ export default function productReducer(state = initialState, action) {
         loading: false,
       };
 
+<<<<<<< HEAD
     case ADD_PRODUCTS:
       return {
         ...state,
@@ -45,6 +50,8 @@ export default function productReducer(state = initialState, action) {
       );
       return { ...state, products: filteredState };
 
+=======
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
     case PRODUCTS_ERROR:
       return {
         loading: false,

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   ADD_PRODUCTS,
   EDIT_PRODUCTS,
@@ -5,6 +6,9 @@ import {
   GET_PRODUCTS,
   PRODUCTS_ERROR,
 } from "../reducers/types";
+=======
+import { GET_PRODUCTS, PRODUCTS_ERROR } from "../reducers/types";
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
 import axios from "axios";
 
 export const getProducts = () => async (dispatch) => {
@@ -22,6 +26,7 @@ export const getProducts = () => async (dispatch) => {
     });
   }
 };
+<<<<<<< HEAD
 
 export const addProduct = (product) => async (dispatch) => {
   try {
@@ -79,3 +84,5 @@ export const deleteProduct = (id) => async (dispatch) => {
     });
   }
 };
+=======
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e

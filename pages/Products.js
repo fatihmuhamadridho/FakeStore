@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 import {
   getProducts,
   deleteProduct,
@@ -22,14 +23,29 @@ import Swal from "sweetalert2";
 (Modal, ProductDetail, EditProduct).setAppElement();
 
 const Products = () => {
+=======
+import { getProducts } from "../redux/actions/productActions";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import ProductDetail from "react-modal";
+
+ProductDetail.setAppElement();
+
+const Products = (handleSearch) => {
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
   const dispatch = useDispatch();
   const allProductsData = useSelector((state) => state.Products);
   const { loading, error, products } = allProductsData;
 
+<<<<<<< HEAD
   // MODAL
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [descModalIsOpen, setdescModalIsOpen] = useState(false);
   const [editModalIsOpen, seteditModalIsOpen] = useState(false);
+=======
+  const [descModalIsOpen, setdescModalIsOpen] = useState(false);
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
 
   // LOAD DATA
   useEffect(() => {
@@ -39,6 +55,7 @@ const Products = () => {
   // SEARCH TITLE
   const [inputSearch, setInputSearch] = useState("");
 
+<<<<<<< HEAD
   // HANDLE CHANGE
   const handleChange = (e) => {
     let data = { ...userInput };
@@ -46,6 +63,8 @@ const Products = () => {
     setUserInput(data);
   };
 
+=======
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
   const handleChangeEdit = (e) => {
     let data = { ...userEdit };
     data[e.target.name] = e.target.value;
@@ -57,6 +76,7 @@ const Products = () => {
     setInputSearch(e.target.value);
   };
 
+<<<<<<< HEAD
   // ADD PRODUCT
   const [userInput, setUserInput] = useState({
     title: "",
@@ -103,6 +123,8 @@ const Products = () => {
     });
   };
 
+=======
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
   // EDIT AND UPDATE PRODUCT
   const [userEdit, setUserEdit] = useState({
     title: "",
@@ -124,6 +146,7 @@ const Products = () => {
     console.log("Product = " + product.id);
   };
 
+<<<<<<< HEAD
   const handleUpdate = (e) => {
     e.preventDefault();
 
@@ -155,15 +178,25 @@ const Products = () => {
   return (
     <section className="article">
       <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List Products</h1>
+=======
+  return (
+    <section>
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
       {/* MODAL PRODUCT DETAIL BILA LIST PRODUCT DI KLIK AKAN MUNCUL DETAIL PRODUCT */}
       <ProductDetail
         isOpen={descModalIsOpen}
         ariaHideApp={false}
         style={{
           content: {
+<<<<<<< HEAD
             top: "50px",
             left: "180px",
             right: "40px",
+=======
+            top: "40px",
+            left: "140px",
+            right: "140px",
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
             bottom: "40px",
           },
         }}
@@ -195,10 +228,21 @@ const Products = () => {
               <h1 style={{ textAlign: "justify" }}>{userEdit.title}</h1>
               <p style={{ textAlign: "justify" }}>{userEdit.description}</p>
             </div>
+<<<<<<< HEAD
+=======
+
+            <div className="product-price">
+              <span>$ {userEdit.price}</span>
+              <a href="#" className="cart-btn">
+                Add to cart
+              </a>
+            </div>
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
           </div>
         </section>
       </ProductDetail>
 
+<<<<<<< HEAD
       {/* MODAL EDIT PRODUCT */}
       <EditProduct
         isOpen={editModalIsOpen}
@@ -533,6 +577,52 @@ const Products = () => {
                   </div>
                 ))}
         </section>
+=======
+      <section className="product">
+        {loading
+          ? "Loading..."
+          : error
+          ? error.message
+          : products
+              .filter((product) => {
+                if (inputSearch === "") {
+                  return product;
+                } else if (
+                  product.title
+                    .toLowerCase()
+                    .includes(inputSearch.toLowerCase())
+                ) {
+                  return product;
+                }
+              })
+              .map((product) => (
+                <div className="card" key={product.id}>
+                  {/* LIST PRODUCT */}
+                  <a
+                    onClick={() =>
+                      setdescModalIsOpen(true) & handleEdit(product)
+                    }
+                  >
+                    <div className="card-image">
+                      <Image
+                        src={product.image}
+                        alt="A image of product"
+                        width={100}
+                        height={140}
+                      />
+                    </div>
+
+                    <div className="text">
+                      <p>{product.title}</p>
+                      <p>$ {product.price}</p>
+                      <p>
+                        {product.rating.rate} | {product.rating.count}
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              ))}
+>>>>>>> 52d1bafaae3ddf69d0a09100bdd3d8c5629d171e
       </section>
     </section>
   );
