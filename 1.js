@@ -3,7 +3,10 @@ console.log('ulang2')
 
 const Testing = () => {
     return (
-        <div>Testing aja</div>
+        <div>
+            <h1>jangan masukin</h1>
+            <h1>masukin aja coba</h1>
+        </div>
     );
 }
  
