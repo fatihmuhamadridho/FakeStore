@@ -1,2 +1,2 @@
-console.log('ulang')
+console.log('ulangulang')
 console.log('ulang2')
