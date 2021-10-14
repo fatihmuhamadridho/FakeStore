@@ -134,7 +134,7 @@ const Products = (handleSearch) => {
                     }
                   >
                     <div className="card-image">
-                      <Image
+                      <img
                         src={product.image}
                         alt="A image of product"
                         width={100}
