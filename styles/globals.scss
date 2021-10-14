@@ -20,8 +20,13 @@ a {
   width: 100%;
   margin: 0 auto;
 }
+
 // NAVBAR
+
 .navbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
   width: 100%;
   background-color: #ff9d21;
   padding-left: 30px;
@@ -57,16 +62,18 @@ a {
 
 .product {
   display: flex;
-  max-width: 1270;
+  max-width: 100%;
   flex-wrap: wrap;
+  margin: 30px;
+  margin-top: 90px;
 }
 
 .card {
-  flex: 200px;
+  flex: 250px;
   margin: 14px;
   border-radius: 10px;
   background-color: #ffdaae;
-  height: 300px;
+  height: 350px;
 }
 
 .card .text {
@@ -142,4 +149,9 @@ a {
 
 a {
   cursor: pointer;
+}
+
+.carts {
+  margin: 30px;
+  margin-top: 100px;
 }
