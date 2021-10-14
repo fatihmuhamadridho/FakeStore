@@ -421,7 +421,7 @@ const Products = () => {
 
       <div className="Header">
         <button onClick={() => setModalIsOpen(true)} className="bn54">
-          Add New Product
+          Create Product
         </button>
 
         {/* SEACRH PRODUCT BY TITLE */}
@@ -443,6 +443,28 @@ const Products = () => {
       <section>
         <section className="product">
           <title>Product List</title>
+          <div className="product-detail">
+            <div className="id">
+              <span>No.</span>
+            </div>
+
+            <div className="left-column">
+              <span>Title</span>
+            </div>
+
+            <div className="right-column">
+              <div className="product-description">
+                <span>Category</span>
+              </div>
+            </div>
+
+            <div className="action-column">
+              <div className="product-description">
+                <span>Action</span>
+              </div>
+            </div>
+          </div>
+          <hr />
           {loading
             ? "Loading..."
             : error

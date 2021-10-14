@@ -130,11 +130,29 @@ const Users = () => {
         <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List User</h1>
         <div className="header">
           <button onClick={() => setModalIsOpen(true)} className="bn54">
-            Add New User
+            Create User
           </button>
           <br />
         </div>
         <div>
+          <div className={styles.list}>
+            <div className="id">
+              <p>No.</p>
+            </div>
+
+            <div className={styles.leftcolumn}>
+              <p>Name</p>
+            </div>
+
+            <div className={styles.rightcolumn}>
+              <p>Username</p>
+            </div>
+
+            <div className={styles.actioncolumn}>
+              <p>Action</p>
+            </div>
+          </div>
+          <hr />
           {loading
             ? "Loading..."
             : error
