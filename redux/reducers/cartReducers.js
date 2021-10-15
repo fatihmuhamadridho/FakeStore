@@ -1,26 +1,50 @@
-import { GET_CARTS, CARTS_ERROR } from "./types";
+import { ADD_CART, GET_CART, REMOVE_ITEM, INCREMENT, DECREMENT } from "./types";
 
 const initialState = {
-  carts: [],
-  cart: {},
-  loading: true,
+  cart: [],
+  quantity: 0,
 };
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_CARTS:
+    case ADD_CART:
+      const itemExists = state.cart.find(
+        (item) => item.id === action.payload.id
+      );
+      if (itemExists) {
+        itemExists.quantity++;
+      } else {
+        state.cart.push({ ...action.payload, quantity: 1 });
+      }
+
+    case GET_CART:
       return {
         ...state,
-        carts: action.payload,
+        cart: state.cart.map((item) =>
+          Number(item) === Number(action.payload)
+            ? (item = action.payload)
+            : item
+        ),
         loading: false,
       };
 
-    case CARTS_ERROR:
-      return {
-        loading: false,
-        error: action.payload,
-      };
+    case REMOVE_ITEM:
+      const filteredState = state.cart.filter(
+        (item) => Number(item.id) !== Number(action.payload.id)
+      );
+      return { ...state, cart: filteredState };
 
+    case DECREMENT:
+      const item = state.cart.find((item) => item.id === action.payload.id);
+      if (item.quantity === 1) {
+        const index = state.cart.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        state.cart.splice(index, 1);
+      } else {
+        item.quantity--;
+      }
+      return { ...state };
     default:
       return state;
   }

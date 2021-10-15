@@ -73,7 +73,7 @@ a {
   margin: 14px;
   border-radius: 10px;
   background-color: #ffdaae;
-  height: 350px;
+  height: auto;
 }
 
 .card .text {
@@ -142,6 +142,7 @@ a {
   text-decoration: none;
   padding: 12px 30px;
   transition: all 0.5s;
+  cursor: pointer;
 }
 .cart-btn:hover {
   background-color: #64af3d;
@@ -154,4 +155,35 @@ a {
 .carts {
   margin: 30px;
   margin-top: 100px;
+}
+
+.button-ud {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  float: right;
+}
+
+// BADGE JUMLAH CART
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+  font-size: 12px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
 }

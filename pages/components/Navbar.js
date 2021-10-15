@@ -1,12 +1,52 @@
 import Image from "next/dist/client/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/dist/client/router";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const router = useRouter();
+
+  const allCartsData = useSelector((state) => state.Carts);
+  const { cart } = allCartsData;
+
+  const getItemsCount = () => {
+    return cart.reduce((accumulator, item) => accumulator + item.quantity, 0);
+  };
+
+  const handleToHome = (e) => {
+    e.preventDefault();
+    router.push("/");
+  };
+
+  const handleToCart = (e) => {
+    e.preventDefault();
+    router.push("../../Carts");
+  };
+
+  const handleToMen = (e) => {
+    e.preventDefault();
+    router.push("../Category/Men's");
+  };
+
+  const handleToWomen = (e) => {
+    e.preventDefault();
+    router.push("../Category/Women's");
+  };
+
+  const handleTojewelery = (e) => {
+    e.preventDefault();
+    router.push("../Category/Jewelery");
+  };
+  const handleToElectronics = (e) => {
+    e.preventDefault();
+    router.push("../Category/Electronics");
+  };
+
   return (
     <section className="nav">
       <nav className="navbar">
-        <a href="/">
+        <a onClick={handleToHome}>
           <Image src="/image/logo.png" width="170px" height="70px" />
         </a>
         <div className="nav-mid">
@@ -20,23 +60,26 @@ const Navbar = () => {
 
           <ul className="category">
             <li className="nav-item">
-              <a href="#">Men's</a>
+              <a onClick={handleToMen}>Men's</a>
             </li>
             <li className="nav-item">
-              <a href="#">Women's</a>
+              <a onClick={handleToWomen}>Women's</a>
             </li>
             <li className="nav-item">
-              <a href="#">Elctronic's</a>
+              <a onClick={handleToElectronics}>Electronic's</a>
             </li>
             <li className="nav-item">
-              <a href="#">Jewelery</a>
+              <a onClick={handleTojewelery}>Jewelery</a>
             </li>
           </ul>
         </div>
         <ul className="nav-links">
           <li className="nav-item">
-            <a href="./Carts">
+            <a onClick={handleToCart}>
               <FontAwesomeIcon icon={faCartPlus} size="2x" />
+              <span class="badge badge-warning" id="lblCartCount">
+                {getItemsCount()}
+              </span>
             </a>
           </li>
           <li className="nav-item">

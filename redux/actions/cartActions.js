@@ -1,18 +1,47 @@
-import { GET_CARTS, CARTS_ERROR } from "../reducers/types";
-import axios from "axios";
+import {
+  ADD_CART,
+  DECREMENT,
+  GET_CART,
+  INCREMENT,
+  REMOVE_ITEM,
+} from "../reducers/types";
 
-export const getCarts = () => async (dispatch) => {
-  try {
-    const res = await axios.get(`https://fakestoreapi.com/carts/user/2`);
-    dispatch({
-      type: GET_CARTS,
-      payload: res.data,
-    });
-    console.log(res.data);
-  } catch (error) {
-    dispatch({
-      type: CARTS_ERROR,
-      payload: error,
-    });
-  }
+export const addCarts = (product) => async (dispatch) => {
+  dispatch({
+    type: ADD_CART,
+    payload: product,
+  });
+  console.log(product);
+};
+
+export const getCarts = (product) => async (dispatch) => {
+  dispatch({
+    type: GET_CART,
+    payload: product,
+  });
+  console.log(product);
+};
+
+export const removeItem = (item) => async (dispatch) => {
+  dispatch({
+    type: REMOVE_ITEM,
+    payload: item,
+  });
+  console.log(item);
+};
+
+export const incrementItem = (item) => async (dispatch) => {
+  dispatch({
+    type: ADD_CART,
+    payload: item,
+  });
+  console.log("quantity = " + item.quantity);
+};
+
+export const decrementItem = (item) => async (dispatch) => {
+  dispatch({
+    type: DECREMENT,
+    payload: item,
+  });
+  console.log("quantity = " + item.quantity);
 };
