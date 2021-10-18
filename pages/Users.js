@@ -11,20 +11,57 @@ import {
 import styles from "../styles/Users.module.scss";
 import DetailUser from "react-modal";
 import Swal from "sweetalert2";
+import Modal from "react-modal";
 
-DetailUser.setAppElement();
+(Modal, DetailUser).setAppElement();
 
 const Users = () => {
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.Users);
-  const { loading, error, users } = allUsers;
+  const allUsersData = useSelector((state) => state.Users);
+  const { loading, error, users } = allUsersData;
+
+  // MODAL
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [descModalIsOpen, setdescModalIsOpen] = useState(false);
+  const [editModalIsOpen, seteditModalIsOpen] = useState(false);
 
   // LOAD DATA
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
-  //userEdit
+  // SEARCH TITLE
+  const [inputSearch, setInputSearch] = useState("");
+
+  // HANDLE CHANGE
+  const handleChange = (e) => {
+    let data = { ...userInput };
+    data[e.target.name] = e.target.value;
+    setUserInput(data);
+  };
+
+  const handleChangeEdit = (e) => {
+    let data = { ...userEdit };
+    data[e.target.name] = e.target.value;
+    setUserEdit(data);
+  };
+
+  const handleChangeSearch = (e) => {
+    e.preventDefault();
+    setInputSearch(e.target.value);
+  };
+
+  // ADD PRODUCT
+  const [userInput, setUserInput] = useState({
+    id: "",
+    email: "",
+    username: "",
+    fullname: "",
+    phone: "",
+    address: "",
+  });
+
+  // EDIT AND UPDATE PRODUCT
   const [userEdit, setUserEdit] = useState({
     id: "",
     email: "",
@@ -34,17 +71,7 @@ const Users = () => {
     address: "",
   });
 
-  // MODAL
-  const [detailUser, setDetailUser] = useState(false);
-
-  //Handle Change
-  const handleChangeEdit = (e) => {
-    let data = { ...userEdit };
-    data[e.target.name] = e.target.value;
-    setUserEdit(data);
-  };
-
-  const handleEdit = (user) => {
+  const handleEdit = (product) => {
     setUserEdit({
       id: user.id,
       email: user.email,
@@ -62,12 +89,15 @@ const Users = () => {
     });
     console.log("User = " + user.id);
   };
-  return (
-    //MODAL
 
-    <div>
+  return (
+    <section className="article">
+      <title>Users</title>
+      <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List User</h1>
+
+      {/* Modal */}
       <DetailUser
-        isOpen={detailUser}
+        isOpen={descModalIsOpen}
         ariaHideApp={false}
         style={{
           content: {
@@ -125,59 +155,101 @@ const Users = () => {
         </section>
       </DetailUser>
 
-      <section className="article">
-        <title>Users</title>
-        <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List User</h1>
-        <div className="header">
-          <button onClick={() => setModalIsOpen(true)} className="bn54">
-            Create User
-          </button>
-          <br />
+      <div className="Header">
+        <button onClick={() => setModalIsOpen(true)} className="bn54">
+          Create User
+        </button>
+
+        {/* SEACRH PRODUCT BY TITLE */}
+        <div className="search">
+          <form id="animated">
+            {" "}
+            <input
+              name={inputSearch}
+              type="text"
+              placeholder="Search User Here..."
+              onChange={handleChangeSearch}
+              value={inputSearch}
+              className="input-search"
+            />
+          </form>
         </div>
-        <div>
-          <div className={styles.list}>
-            <div className="id">
-              <p>No.</p>
-            </div>
-
-            <div className={styles.leftcolumn}>
-              <p>Name</p>
-            </div>
-
-            <div className={styles.rightcolumn}>
-              <p>Username</p>
-            </div>
-
-            <div className={styles.actioncolumn}>
-              <p>Action</p>
-            </div>
+      </div>
+      <div>
+        <div className={styles.list}>
+          <div className="id">
+            <p>No.</p>
           </div>
-          <hr />
-          {loading
-            ? "Loading..."
-            : error
-            ? error.message
-            : users.map((u) => (
-                <div key={u.id}>
+
+          <div className={styles.leftcolumn}>
+            <p>Name</p>
+          </div>
+
+          <div className={styles.rightcolumn}>
+            <p>Username</p>
+          </div>
+
+          <div className={styles.actioncolumn}>
+            <p>Action</p>
+          </div>
+        </div>
+        <hr />
+        {loading
+          ? "Loading..."
+          : error
+          ? error.message
+          : users
+              .filter((user) => {
+                if (inputSearch === "") {
+                  return user;
+                } else if (
+                  user.name.firstname
+                    .toLowerCase()
+                    .includes(inputSearch.toLocaleLowerCase())
+                ) {
+                  return user;
+                } else if (
+                  user.name.lastname
+                    .toLowerCase()
+                    .includes(inputSearch.toLocaleLowerCase())
+                ) {
+                  return user;
+                } else if (
+                  user.email
+                    .toLowerCase()
+                    .includes(inputSearch.toLocaleLowerCase())
+                ) {
+                  return user;
+                } else if (
+                  user.username
+                    .toLowerCase()
+                    .includes(inputSearch.toLocaleLowerCase())
+                ) {
+                  return user;
+                }
+              })
+              .map((user) => (
+                // .map((u) => (
+                <div key={user.id}>
                   <div className={styles.list}>
                     <div className="id">
-                      <p>{u.id}</p>
+                      <p>{user.id}</p>
                     </div>
 
                     <div className={styles.leftcolumn}>
                       <p>
-                        {u.name.firstname} {u.name.lastname}
+                        {user.name.firstname} {user.name.lastname}
                       </p>
                     </div>
 
                     <div className={styles.rightcolumn}>
-                      <p>{u.username}</p>
+                      <p>{user.username}</p>
                     </div>
 
                     <div className={styles.actioncolumn}>
                       {/* DETAIL PRODUCT */}
                       <button
-                        onClick={() => setDetailUser(true) & handleEdit(u)}
+                        onClick={() => setDetailUser(true) & handleEdit(user)}
                         className="button-ud"
                       >
                         <FontAwesomeIcon
@@ -190,7 +262,7 @@ const Users = () => {
                       {/* EDIT PRODUCT */}
                       <button
                         onClick={() =>
-                          seteditModalIsOpen(true) & handleEdit(product)
+                          seteditModalIsOpen(true) & handleEdit(user)
                         }
                         className="button-ud"
                       >
@@ -205,10 +277,10 @@ const Users = () => {
                       <button
                         onClick={() =>
                           dispatch(
-                            deleteUsers(u.id),
+                            deleteUsers(user.id),
                             Swal.fire(
                               "Berhasil Menghapus!",
-                              "User " + u.username + " Berhasil di Hapus!",
+                              "User " + user.username + " Berhasil di Hapus!",
                               "success"
                             )
                           )
@@ -226,9 +298,8 @@ const Users = () => {
                   <hr />
                 </div>
               ))}
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
