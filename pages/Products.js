@@ -68,10 +68,10 @@ const Products = () => {
         ariaHideApp={false}
         style={{
           content: {
-            top: "40px",
-            left: "140px",
-            right: "140px",
-            bottom: "40px",
+            top: "100px",
+            left: "100px",
+            right: "100px",
+            bottom: "20px",
           },
         }}
       >

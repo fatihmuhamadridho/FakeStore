@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/dist/client/router";
 import { useSelector } from "react-redux";
+import styles from "../../styles/CartPage.module.scss";
 
 const Nav = () => {
   const router = useRouter();
@@ -81,7 +82,7 @@ const Nav = () => {
 
           <div className="nav-right">
             <li>
-              <a onClick={handleToCart}>
+              <a>
                 <FontAwesomeIcon icon={faCartPlus} size="2x" />
                 <span class="badge badge-warning" id="lblCartCount">
                   {getItemsCount()}
@@ -94,15 +95,26 @@ const Nav = () => {
                   </center>
                 ) : (
                   <>
+                    <div className="header-navcart">
+                      <h1>Cart</h1>
+                      <h1>
+                        <a onClick={handleToCart} style={{ color: "#FF5A5A" }}>
+                          See All
+                        </a>
+                      </h1>
+                    </div>
+                    <hr />
                     {cart.map((item) => (
                       <div className="mega-menu-content">
-                        <div>
+                        <div className={styles.image}>
                           <Image src={item.image} height="90" width="65" />
                         </div>
 
-                        <div>
-                          <p>{item.title}</p>
-                          <p>{item.quantity}</p>
+                        <div style={{ width: "400px" }}>
+                          <p style={{ textAlign: "justify" }}>
+                            {item.title} <br />
+                            {item.quantity} pcs
+                          </p>
                         </div>
 
                         <p>$ {item.price}</p>
