@@ -42,6 +42,8 @@ const Products = () => {
     description: "",
     image: "",
     category: "",
+    rating: "",
+    count: "",
   });
 
   const handleEdit = (product) => {
@@ -52,6 +54,8 @@ const Products = () => {
       description: product.description,
       image: product.image,
       category: product.category,
+      rating: product.rating.rate,
+      count: product.rating.count,
     });
     console.log("Product = " + product.id);
   };
@@ -94,13 +98,15 @@ const Products = () => {
 
           <div className="right-column">
             <div className="product-description">
-              <span>{productDet.category}</span>
               <h1 style={{ textAlign: "justify" }}>{productDet.title}</h1>
+              <span>
+                {productDet.rating} | {productDet.count}
+              </span>
+              <h1>$ {productDet.price}</h1>
               <p style={{ textAlign: "justify" }}>{productDet.description}</p>
             </div>
 
-            <div className="product-price">
-              <span>$ {productDet.price}</span>
+            <div className="add-to-cart">
               <button
                 className="cart-btn"
                 onClick={() =>

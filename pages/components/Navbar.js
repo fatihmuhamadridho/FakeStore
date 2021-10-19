@@ -38,6 +38,7 @@ const Navbar = () => {
     e.preventDefault();
     router.push("../Category/Jewelery");
   };
+
   const handleToElectronics = (e) => {
     e.preventDefault();
     router.push("../Category/Electronics");
@@ -73,15 +74,42 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+
         <ul className="nav-links">
-          <li className="nav-item">
+          <li className="nav-item" style={{ width: "200px" }}>
             <a onClick={handleToCart}>
               <FontAwesomeIcon icon={faCartPlus} size="2x" />
               <span class="badge badge-warning" id="lblCartCount">
                 {getItemsCount()}
               </span>
             </a>
+
+            <div className="mega-menu">
+              {cart.length === 0 ? (
+                <center>
+                  <h1 style={{ marginTop: "100px" }}>Your Cart is Empty!</h1>
+                </center>
+              ) : (
+                <>
+                  {cart.map((item) => (
+                    <div className="dropdown-list">
+                      <div>
+                        <Image src={item.image} height="90" width="65" />
+                      </div>
+
+                      <div>
+                        <p>{item.title}</p>
+                        <p>{item.quantity}</p>
+                      </div>
+
+                      <p>$ {item.price}</p>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
           </li>
+
           <li className="nav-item">
             <a href="#" style={{ fontSize: "24px" }}>
               Log in

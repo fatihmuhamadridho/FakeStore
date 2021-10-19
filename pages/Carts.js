@@ -10,6 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/CartPage.module.scss";
 import Image from "next/dist/client/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Carts = () => {
   const dispatch = useDispatch();
@@ -29,24 +31,30 @@ const Carts = () => {
     );
   };
 
+  const getTotalProduct = () => {
+    return cart.reduce((accumulator, item) => accumulator + item.quantity, 0);
+  };
+
   return (
     <div>
       <Head>
         <title>Carts</title>
       </Head>
 
-      <div className={styles.container}>
-        {cart.length === 0 ? (
-          <h1>Your Cart is Empty!</h1>
-        ) : (
+      {cart.length === 0 ? (
+        <center>
+          <h1 style={{ marginTop: "100px" }}>Your Cart is Empty!</h1>
+        </center>
+      ) : (
+        <div className={styles.container}>
           <>
             <div className={styles.header}>
               <div>Image</div>
               <div>Product</div>
               <div>Price</div>
               <div>Quantity</div>
-              <div>Actions</div>
               <div>Total Price</div>
+              <div>Actions</div>
             </div>
             {cart.map((item) => (
               <div className={styles.body}>
@@ -55,30 +63,33 @@ const Carts = () => {
                 </div>
                 <p>{item.title}</p>
                 <p>$ {item.price}</p>
-                <p>{item.quantity}</p>
                 <div className={styles.buttons}>
                   <button onClick={() => dispatch(incrementItem(item))}>
                     +
                   </button>
-                  <button
-                    onClick={() =>
-                      dispatch(
-                        decrementItem(item),
-                        console.log("Decrement nih")
-                      )
-                    }
-                  >
+                  {item.quantity}
+                  <button onClick={() => dispatch(decrementItem(item))}>
                     -
                   </button>
-                  <button onClick={() => dispatch(removeItem(item))}>x</button>
                 </div>
                 <p>$ {item.quantity * item.price}</p>
+                <button
+                  onClick={() => dispatch(removeItem(item))}
+                  className="button-ud"
+                >
+                  <FontAwesomeIcon icon={faTrash} size="2x" />
+                </button>
               </div>
             ))}
-            <h2>Grand Total: $ {getTotalPrice()}</h2>
+            <hr style={{ border: "solid 1px" }} />
+            <div className="total-cart">
+              <h2>Total Product: {getTotalProduct()}</h2>
+              <h2>Grand Total: $ {getTotalPrice()}</h2>
+              <button className="cart-checkout">Checkout</button>
+            </div>
           </>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
