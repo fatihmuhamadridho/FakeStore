@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions/productActions";
+import { addCarts } from "../redux/actions/cartActions";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +9,10 @@ import ProductDetail from "react-modal";
 
 ProductDetail.setAppElement();
 
-const Products = (handleSearch) => {
+const Products = () => {
   const dispatch = useDispatch();
   const allProductsData = useSelector((state) => state.Products);
-  const { loading, error, products } = allProductsData;
+  const { loading, error, products, product } = allProductsData;
 
   const [descModalIsOpen, setdescModalIsOpen] = useState(false);
 
@@ -34,23 +35,27 @@ const Products = (handleSearch) => {
     setInputSearch(e.target.value);
   };
 
-  // EDIT AND UPDATE PRODUCT
-  const [userEdit, setUserEdit] = useState({
+  // Product Detail
+  const [productDet, setProductDet] = useState({
     title: "",
     price: "",
     description: "",
     image: "",
     category: "",
+    rating: "",
+    count: "",
   });
 
   const handleEdit = (product) => {
-    setUserEdit({
+    setProductDet({
       id: product.id,
       title: product.title,
       price: product.price,
       description: product.description,
       image: product.image,
       category: product.category,
+      rating: product.rating.rate,
+      count: product.rating.count,
     });
     console.log("Product = " + product.id);
   };
@@ -63,10 +68,10 @@ const Products = (handleSearch) => {
         ariaHideApp={false}
         style={{
           content: {
-            top: "40px",
-            left: "140px",
-            right: "140px",
-            bottom: "40px",
+            top: "100px",
+            left: "100px",
+            right: "100px",
+            bottom: "20px",
           },
         }}
       >
@@ -84,7 +89,7 @@ const Products = (handleSearch) => {
         <section className="product-detail">
           <div className="left-column">
             <Image
-              src={userEdit.image}
+              src={productDet.image}
               alt="A image of product"
               width={400}
               height={450}
@@ -93,16 +98,26 @@ const Products = (handleSearch) => {
 
           <div className="right-column">
             <div className="product-description">
-              <span>{userEdit.category}</span>
-              <h1 style={{ textAlign: "justify" }}>{userEdit.title}</h1>
-              <p style={{ textAlign: "justify" }}>{userEdit.description}</p>
+              <h1 style={{ textAlign: "justify" }}>{productDet.title}</h1>
+              <span>
+                {productDet.rating} | {productDet.count}
+              </span>
+              <h1>$ {productDet.price}</h1>
+              <p style={{ textAlign: "justify" }}>{productDet.description}</p>
             </div>
 
-            <div className="product-price">
-              <span>$ {userEdit.price}</span>
-              <a href="#" className="cart-btn">
+            <div className="add-to-cart">
+              <button
+                className="cart-btn"
+                onClick={() =>
+                  dispatch(
+                    addCarts(productDet),
+                    alert("Berhasil menambahkan keranjang " + productDet.title)
+                  )
+                }
+              >
                 Add to cart
-              </a>
+              </button>
             </div>
           </div>
         </section>
