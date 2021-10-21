@@ -103,14 +103,14 @@ const Nav = () => {
                         </a>
                       </h1>
                     </div>
-                    <hr />
+                    <hr style={{ border: "solid 2px" }} />
                     {cart.map((item) => (
                       <div className="mega-menu-content">
                         <div className={styles.image}>
                           <Image src={item.image} height="90" width="65" />
                         </div>
 
-                        <div style={{ width: "400px" }}>
+                        <div style={{ width: "300px" }}>
                           <p style={{ textAlign: "justify" }}>
                             {item.title} <br />
                             {item.quantity} pcs
