@@ -1,4 +1,4 @@
-import { DELETE_USERS, GET_USERS, USERS_ERROR } from "./types";
+import { ADD_USERS, DELETE_USERS, GET_USERS, USERS_ERROR } from "./types";
 
 const initialState = {
   users: [],
@@ -12,6 +12,13 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+        loading: false,
+      };
+
+    case ADD_USERS:
+      return {
+        ...state,
+        users: state.users.concat(action.payload),
         loading: false,
       };
 
