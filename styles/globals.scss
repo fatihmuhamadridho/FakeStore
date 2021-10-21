@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Quando&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Quando&display=swap");
 
 body {
   background-color: #96c8eb;
+  font-family: "Poppins", sans-serif;
 }
 
 .article {
   margin-top: 50px;
   margin-left: 210px; /* Same as the width of the sidenav */
-  font-size: 18px; /* Increased text to enable scrolling */
+  font-size: 16px; /* Increased text to enable scrolling */
   padding: 0px 10px;
   background-color: #96c8eb;
 }
@@ -240,4 +241,12 @@ $gray: #9b9b9b;
   &:invalid {
     box-shadow: none;
   }
+}
+
+hr {
+  border: none;
+  height: 2px;
+  /* Set the hr color */
+  color: #333; /* old IE */
+  background-color: #333; /* Modern Browsers */
 }

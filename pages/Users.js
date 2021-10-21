@@ -141,7 +141,15 @@ const Users = () => {
   return (
     <section className="article">
       <title>Users</title>
-      <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List User</h1>
+      <h1
+        style={{
+          lineHeight: "0px",
+          marginTop: "80px",
+          fontFamily: "Quando",
+        }}
+      >
+        List User
+      </h1>
 
       {/* Modal */}
       <div className="Modal">

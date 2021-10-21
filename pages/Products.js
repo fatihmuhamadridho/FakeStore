@@ -154,7 +154,11 @@ const Products = () => {
 
   return (
     <section className="article">
-      <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List Products</h1>
+      <h1
+        style={{ lineHeight: "0px", marginTop: "80px", fontFamily: "Quando" }}
+      >
+        List Products
+      </h1>
       {/* MODAL PRODUCT DETAIL BILA LIST PRODUCT DI KLIK AKAN MUNCUL DETAIL PRODUCT */}
       <ProductDetail
         isOpen={descModalIsOpen}
