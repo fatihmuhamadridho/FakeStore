@@ -1,26 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/actions/productActions";
-import { addCarts } from "../redux/actions/cartActions";
+import { getElectronics } from "../../redux/actions/categoryActions";
+import { addCarts } from "../../redux/actions/cartActions";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import ProductDetail from "react-modal";
+import Head from "next/head";
 
 ProductDetail.setAppElement();
 
 const Products = () => {
   const dispatch = useDispatch();
   const allProductsData = useSelector((state) => state.Products);
-  const { loading, error, products, isSearchActive, foundProducts } =
-    allProductsData;
+  const { loading, error, products } = allProductsData;
 
   const [descModalIsOpen, setdescModalIsOpen] = useState(false);
 
   // LOAD DATA
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getElectronics());
   }, []);
+
+  // SEARCH TITLE
+  const [inputSearch, setInputSearch] = useState("");
+
+  const handleChangeEdit = (e) => {
+    let data = { ...userEdit };
+    data[e.target.name] = e.target.value;
+    setUserEdit(data);
+  };
+
+  const handleChangeSearch = (e) => {
+    e.preventDefault();
+    setInputSearch(e.target.value);
+  };
 
   // Product Detail
   const [productDet, setProductDet] = useState({
@@ -49,6 +63,10 @@ const Products = () => {
 
   return (
     <section>
+      <Head>
+        <title>Electronic's Category</title>
+      </Head>
+
       {/* MODAL PRODUCT DETAIL BILA LIST PRODUCT DI KLIK AKAN MUNCUL DETAIL PRODUCT */}
       <ProductDetail
         isOpen={descModalIsOpen}

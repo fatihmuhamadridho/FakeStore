@@ -1,115 +1,95 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCarts } from "../redux/actions/cartActions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import Head from "next/dist/shared/lib/head";
+import { useEffect } from "react";
 import {
-  faTrash,
-  faPen,
-  faWindowClose,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import styles from "../styles/Users.module.scss";
+  decrementItem,
+  getCarts,
+  incrementItem,
+  removeItem,
+} from "../redux/actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "../styles/CartPage.module.scss";
+import Image from "next/dist/client/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Carts = () => {
   const dispatch = useDispatch();
-  const allCarts = useSelector((state) => state.Carts);
-  const { loading, error, carts } = allCarts;
+  const allCartsData = useSelector((state) => state.Carts);
+  const { cart } = allCartsData;
 
   // LOAD DATA
   useEffect(() => {
     dispatch(getCarts());
   }, []);
 
+  // TOTAL PRICE
+  const getTotalPrice = () => {
+    return cart.reduce(
+      (accumulator, item) => accumulator + item.quantity * item.price,
+      0
+    );
+  };
+
+  const getTotalProduct = () => {
+    return cart.reduce((accumulator, item) => accumulator + item.quantity, 0);
+  };
+
   return (
     <div>
-      <section className="article">
+      <Head>
         <title>Carts</title>
-        <h1 style={{ lineHeight: "0px", marginTop: "80px" }}>List Cart</h1>
-        <div>
-          {loading
-            ? "Loading..."
-            : error
-            ? error.message
-            : carts.map((cart) => (
-                <div>
-                  <div className={styles.list} key={cart.id}>
-                    <div className="id">
-                      <span>{cart.id}</span>
-                    </div>
+      </Head>
 
-                    <div
-                      className={styles.leftcolumn}
-                      style={{ lineHeight: "0px" }}
-                    >
-                      <span style={{ textAlign: "justify" }}>
-                        <p>test</p>
-                        <p>test</p>
-                        <p>test</p>
-                      </span>
-                    </div>
-
-                    <div className={styles.rightcolumn}>
-                      <span>test</span>
-                    </div>
-
-                    <div className={styles.actioncolumn}>
-                      {/* DETAIL PRODUCT */}
-                      <button
-                        onClick={() =>
-                          setdescModalIsOpen(true) & handleEdit(product)
-                        }
-                        className="button-ud"
-                      >
-                        <FontAwesomeIcon
-                          icon={faInfoCircle}
-                          size="1x"
-                          style={{ color: "green" }}
-                        />
-                      </button>
-
-                      {/* EDIT PRODUCT */}
-                      <button
-                        onClick={() =>
-                          seteditModalIsOpen(true) & handleEdit(product)
-                        }
-                        className="button-ud"
-                      >
-                        <FontAwesomeIcon
-                          icon={faPen}
-                          size="1x"
-                          style={{ color: "blue" }}
-                        />
-                      </button>
-
-                      {/* DELETE PRODUCT */}
-                      <button
-                        onClick={() =>
-                          dispatch(
-                            deleteProduct(product.id),
-                            Swal.fire(
-                              "Berhasil Menghapus!",
-                              "Product " +
-                                product.title +
-                                " Berhasil di Hapus!",
-                              "success"
-                            )
-                          )
-                        }
-                        className="button-ud"
-                      >
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          size="1x"
-                          style={{ color: "red" }}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                  <hr />
+      {cart.length === 0 ? (
+        <center>
+          <h1 style={{ marginTop: "100px" }}>Your Cart is Empty!</h1>
+        </center>
+      ) : (
+        <div className={styles.container}>
+          <>
+            <div className={styles.header}>
+              <div>Image</div>
+              <div>Product</div>
+              <div>Price</div>
+              <div>Quantity</div>
+              <div>Total Price</div>
+              <div>Actions</div>
+            </div>
+            {cart.map((item) => (
+              <div className={styles.body}>
+                <div className={styles.image}>
+                  <Image src={item.image} height="90" width="65" />
                 </div>
-              ))}
+                <p>{item.title}</p>
+                <p>$ {item.price}</p>
+                <div className={styles.buttons}>
+                  <button onClick={() => dispatch(incrementItem(item))}>
+                    +
+                  </button>
+                  {item.quantity}
+                  <button onClick={() => dispatch(decrementItem(item))}>
+                    -
+                  </button>
+                </div>
+                <p>$ {item.quantity * item.price}</p>
+                <button
+                  onClick={() => dispatch(removeItem(item))}
+                  className="button-ud"
+                >
+                  <FontAwesomeIcon icon={faTrash} size="2x" />
+                </button>
+              </div>
+            ))}
+            <hr style={{ border: "solid 1px" }} />
+            <div className="total-cart">
+              <h2>Total Product: {getTotalProduct()}</h2>
+              <h2>Grand Total: $ {getTotalPrice()}</h2>
+              <button className="cart-checkout">Checkout</button>
+            </div>
+          </>
         </div>
-      </section>
+      )}
     </div>
   );
 };
